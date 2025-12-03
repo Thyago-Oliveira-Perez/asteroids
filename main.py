@@ -1,12 +1,20 @@
 import pygame
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
+from player import Player
+
+MAX_FPS = 60
+BACKGROUND_COLOR = "black"
 
 def main():
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    clock = pygame.time.Clock()
+    dt = 0
+
+    player = Player(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
     while True:
         log_state()
@@ -14,8 +22,11 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        screen.fill("black")
+        screen.fill(BACKGROUND_COLOR)
+        player.draw(screen)
         pygame.display.flip()
+        # convert from milliseconds to seconds
+        dt = clock.tick(MAX_FPS) / 1000
 
 
 if __name__ == "__main__":
