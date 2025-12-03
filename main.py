@@ -23,10 +23,11 @@ def main():
                 return
 
         screen.fill(BACKGROUND_COLOR)
+        player.update(dt)
         player.draw(screen)
         pygame.display.flip()
-        # convert from milliseconds to seconds
-        dt = clock.tick(MAX_FPS) / 1000
+        
+        dt = clock.tick(MAX_FPS) / 1000 # convert from milliseconds to seconds
 
 
 if __name__ == "__main__":
