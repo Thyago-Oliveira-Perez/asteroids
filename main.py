@@ -14,7 +14,10 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
-    player = Player(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
 
     while True:
         log_state()
@@ -23,8 +26,11 @@ def main():
                 return
 
         screen.fill(BACKGROUND_COLOR)
-        player.update(dt)
-        player.draw(screen)
+
+        updatable.update(dt)
+        for sprite in drawable:
+            sprite.draw(screen)
+
         pygame.display.flip()
         
         dt = clock.tick(MAX_FPS) / 1000 # convert from milliseconds to seconds
