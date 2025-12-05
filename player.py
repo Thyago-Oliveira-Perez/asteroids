@@ -1,8 +1,6 @@
 import pygame
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_SPEED, PLAYER_TURN_SPEED
+from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_COLOR
 from circleshape import CircleShape
-
-PLAYER_COLOR = "white"
 
 class Player(CircleShape):
 	def __init__(self, x, y):
