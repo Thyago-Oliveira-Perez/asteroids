@@ -6,6 +6,7 @@ from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
 from player import Player
 from logger import log_event
+from shot import Shot
 
 MAX_FPS = 60
 BACKGROUND_COLOR = "black"
@@ -21,6 +22,7 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     # Player setup
     Player.containers = (updatable, drawable)
@@ -30,6 +32,9 @@ def main():
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable)
     asteroid_field = AsteroidField()
+
+    # Shots
+    Shot.containers = (updatable, drawable, shots)
 
     while True:
         log_state()
