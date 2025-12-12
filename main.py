@@ -55,7 +55,9 @@ def main():
             for shot in shots:
                 if shot.collides_with(asteroid):
                     log_event("asteroid_shot")
-                    asteroid.kill()
+                    new_asteroids = asteroid.split()
+                    if new_asteroids:
+                        asteroids.add(new_asteroids)
                     shot.kill()
 
         for sprite in drawable:
