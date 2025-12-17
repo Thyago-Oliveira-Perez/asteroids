@@ -2,19 +2,17 @@ import sys
 import pygame
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, MAX_FPS, FONT_SIZE
 from logger import log_state
 from player import Player
 from logger import log_event
 from shot import Shot
 
-MAX_FPS = 60
-BACKGROUND_COLOR = "black"
-
 def main():
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    font = pygame.font.Font(None, FONT_SIZE)
 
     clock = pygame.time.Clock()
     dt = 0
@@ -36,6 +34,8 @@ def main():
     # Shots
     Shot.containers = (updatable, drawable, shots)
 
+    score = 0
+
     while True:
         log_state()
         for event in pygame.event.get():
@@ -55,6 +55,12 @@ def main():
             for shot in shots:
                 if shot.collides_with(asteroid):
                     log_event("asteroid_shot")
+
+                    # Score: smaller asteroids are worth more.
+                    # Uses integer division to keep values stable.
+                    radius_factor = max(1, int(asteroid.radius // 10))
+                    score += max(10, 100 // radius_factor)
+
                     new_asteroids = asteroid.split()
                     if new_asteroids:
                         asteroids.add(new_asteroids)
@@ -62,6 +68,9 @@ def main():
 
         for sprite in drawable:
             sprite.draw(screen)
+
+        score_surface = font.render(f"Score: {score}", True, "red")
+        screen.blit(score_surface, (10, 10))
 
         pygame.display.flip()
         

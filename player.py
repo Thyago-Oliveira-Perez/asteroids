@@ -1,5 +1,15 @@
 import pygame
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_SHOOT_COOLDOWN_SECONDS, PLAYER_SHOT_SPEED, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_COLOR
+from constants import (
+	PLAYER_RADIUS,
+	LINE_WIDTH,
+	PLAYER_SHOOT_COOLDOWN_SECONDS,
+	PLAYER_SHOT_SPEED,
+	PLAYER_SPEED,
+	PLAYER_TURN_SPEED,
+	PLAYER_COLOR,
+	SCREEN_WIDTH,
+	SCREEN_HEIGHT,
+)
 from circleshape import CircleShape
 from shot import Shot
 
@@ -43,6 +53,19 @@ class Player(CircleShape):
 				self.shoot()
 
 		self.shoot_cooldown -= dt
+
+		# Wrap around screen edges (Asteroids-style).
+		# Uses radius padding so the ship doesn't vanish abruptly.
+		pad = self.radius
+		if self.position.x < -pad:
+			self.position.x = SCREEN_WIDTH + pad
+		elif self.position.x > SCREEN_WIDTH + pad:
+			self.position.x = -pad
+
+		if self.position.y < -pad:
+			self.position.y = SCREEN_HEIGHT + pad
+		elif self.position.y > SCREEN_HEIGHT + pad:
+			self.position.y = -pad
 
 
 	def shoot(self):
